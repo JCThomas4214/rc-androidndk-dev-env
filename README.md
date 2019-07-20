@@ -1,4 +1,4 @@
-# Remote-Container Android Native Development Prototype 
+# Remote-Container Android Native Development 
 
 ## Quick Start Ubuntu
 ```sh
@@ -25,11 +25,11 @@ cd ..
 ### Step by Step
 - Start VSCode and "open folder" to the cloned repo
   - Once the project is open a notification toast will appear in the bottom right corner of the VSCode window. Click "Run Project in Container"
-  - Wait Patiently... It may take 3-7 minutes depending on your hardware and network connection
+  - Wait Patiently... It may take 5-10 minutes depending on your hardware and network connection
 - Once VSCode is loaded as normal you will be able to execute Clean, Build, Compile, and Full tasks for the project
 
 ### VSCode Tasks
-To access tasks in VSCode press ctrl+shift+P and type 'Tasks: Run Task'. The task heirarchy is the following.
+Click the button labeled "Tasks" in the bottom blue bar to view tasks to execute. The task heirarchy is the following.
 - Full
   - Build
     - Clean
@@ -37,7 +37,8 @@ To access tasks in VSCode press ctrl+shift+P and type 'Tasks: Run Task'. The tas
 
 ## Future
 - gdbserver and gdbclient for remote native debugging
-- Docker size optimization
+- separate release, dev, and test builds
+- docker size optimization
 
 ### Sources
 - https://code.visualstudio.com/docs/remote/containers
