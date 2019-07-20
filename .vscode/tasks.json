@@ -1,0 +1,49 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Full",
+            "dependsOn": [
+                "Build",
+                "Compile"
+            ],
+            "dependsOrder": "sequence"
+        },
+        {
+            "label": "Build",
+            "type": "shell",
+            "command": "cmake",
+            "args": [
+                "-DCMAKE_TOOLCHAIN_FILE=/mats/ndk/r20/android-ndk-r20/build/cmake/android.toolchain.cmake",
+                "-DANDROID_ABI=armeabi-v7a",
+                "-DANDROID_NATIVE_API_LEVEL=android-16",
+                "-B", "${workspaceFolder}/build",
+                "-S", "${workspaceFolder}"
+            ],
+            "dependsOn": [
+                "Clean"
+            ]
+        },
+        {
+            "label": "Compile",
+            "type": "shell",
+            "command": "cmake",
+            "args": [
+                "--build", "${workspaceFolder}/build",
+                "--config", "Debug",
+                "--target", "main",
+                "--",
+                "-j", "6"
+            ],   
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "Clean",
+            "type": "shell",
+            "command": "rm -rf ${workspaceFolder}/build",
+        }
+    ]
+}

@@ -1,0 +1,28 @@
+{
+    "version": "0.1.0",
+    "configurations": [
+        {
+            "name": "Test C",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/src/main",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/build/src",
+            // "logging": {
+            //     "trace": true,
+            //     "traceResponse": true
+            // },
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ],
+            "preLaunchTask": "Build_CMakea"
+        }
+    ]
+}
