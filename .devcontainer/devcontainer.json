@@ -16,9 +16,11 @@
 		"lkytal.quicktask"
 	],
 	"runArgs": [
+		"--privileged",
+		"-v", "/dev/bus/usb:/dev/bus/usb",
+		// "--device=/dev/ttyACM0",
 		"--cap-add=SYS_PTRACE",
-		"--security-opt",
-		"seccomp=unconfined"
+		"--security-opt", "seccomp=unconfined"
 	],
 	"settings": {
 		"python.pythonPath": "/usr/local/bin/python",

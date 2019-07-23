@@ -1,22 +1,29 @@
 {
     "version": "2.0.0",
     "tasks": [
+        /*
+            FULL CLEAN, BUILD, COMPILE
+        */
         {
             "label": "Full",
             "dependsOn": [
                 "Build",
-                "Compile"
+                "Move Binary"
             ],
             "dependsOrder": "sequence"
         },
+        /*
+            CMAKE BUILD SECTION
+        */
         {
             "label": "Build",
             "type": "shell",
             "command": "cmake",
             "args": [
                 "-DCMAKE_TOOLCHAIN_FILE=/mats/ndk/r20/android-ndk-r20/build/cmake/android.toolchain.cmake",
-                "-DANDROID_ABI=armeabi-v7a",
-                "-DANDROID_NATIVE_API_LEVEL=android-16",
+                "-DCMAKE_BUILD_TYPE=${input:environment}",
+                "-DANDROID_ABI=${input:ABI}",
+                "-DANDROID_NATIVE_API_LEVEL=${input:API}",
                 "-B", "${workspaceFolder}/build",
                 "-S", "${workspaceFolder}"
             ],
@@ -24,6 +31,9 @@
                 "Clean"
             ]
         },
+        /*
+            COMPILE SECTION
+        */
         {
             "label": "Compile",
             "type": "shell",
@@ -40,10 +50,62 @@
                 "isDefault": true
             }
         },
+        /*
+            CLEAN THE PROJECT
+        */  
         {
             "label": "Clean",
             "type": "shell",
-            "command": "rm -rf ${workspaceFolder}/build",
+            "command": "rm",
+            "args": [
+                "-rf", "${workspaceFolder}/build", "&&",
+                "rm", "-rf", "${workspaceFolder}/release", "&&",
+                "rm", "-rf", "${workspaceFolder}/debug", "&&",
+                "rm", "-rf", "${workspaceFolder}/test"
+            ]
+        },
+        /*
+            ADDITIONAL SCRIPTS
+        */
+        {
+            "label": "Move Binary",
+            "type": "shell",
+            "command": "cp",
+            "args": [
+                "${workspaceFolder}/**/**/main", "${workspaceFolder}/src/"
+            ],
+            "dependsOn": [
+                "Compile"
+            ]
+        }
+    ],
+    "inputs": [
+        {
+            "type": "pickString",
+            "id": "environment",
+            "description": "What build environment are we building?",
+            "options": ["RELEASE", "DEBUG", "TEST"],
+            "default": "RELEASE"
+        },
+        {
+            "type": "pickString",
+            "id": "ABI",
+            "description": "What ABI are we compiling with (arch)?",
+            "options": ["armeabi-v7a", "arm64-v8a", "x86", "x86_64"],
+            "default": "armeabi-v7a"
+        },
+        {
+            "type": "pickString",
+            "id": "API",
+            "description": "What Android API are we compiling for?",
+            "options": [
+                "android-16", "android-17","android-18",
+                "android-19","android-20","android-21",
+                "android-22","android-23","android-24",
+                "android-25","android-26","android-27",
+                "android-28",
+            ],
+            "default": "android-16"
         }
     ]
 }
