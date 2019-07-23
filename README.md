@@ -22,12 +22,12 @@ git clone https://android.googlesource.com/platform/external/googletest //NOTE: 
 cd ..
 ```
 
-### Step by Step
-- Start VSCode and "Open Folder..." to the cloned repo
-  - Once the project is open a notification toast will appear in the bottom right corner of the VSCode window. Click "Reopen in Container"
-    - Alternatively you can click the green button at the bottom left of the vscode window and click the same option
-  - Wait Patiently... It may take 5-10 minutes depending on your hardware and network connection
-- Once VSCode is loaded as normal you will be able to execute Clean, Build, Compile, and Full tasks for the project
+### After Quick Setup
+1. Start VSCode and "Open Folder..." to the cloned repo
+2. Once the project is open a notification toast will appear in the bottom right corner of the VSCode window. Click "Reopen in Container"
+  - Alternatively you can click the green button at the bottom left of the vscode window and click the same option
+3. Wait Patiently... It may take 5-10 minutes depending on your hardware and network connection
+4. Once VSCode is loaded as normal you will be able to execute Clean, Build, Compile, and Full tasks for the project
 
 ### VSCode Tasks
 Click the button labeled "Tasks" in the bottom blue bar to view tasks to execute. The task heirarchy is the following.
@@ -36,6 +36,7 @@ Click the button labeled "Tasks" in the bottom blue bar to view tasks to execute
     ├─ Build
     │   └─ Clean
     └─ Compile
+        └─ Move Binary    
 ```
 ## Future
 - gdbserver and gdbclient for remote native debugging
