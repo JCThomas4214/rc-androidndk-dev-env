@@ -22,7 +22,7 @@ git clone https://android.googlesource.com/platform/external/googletest //NOTE: 
 cd ..
 ```
 
-### After Quick Setup
+### After Quick Start
 1. Start VSCode and "Open Folder..." to the cloned repo
 2. Once the project is open a notification toast will appear in the bottom right corner of the VSCode window. Click "Reopen in Container"
   - Alternatively you can click the green button at the bottom left of the vscode window and click the same option
