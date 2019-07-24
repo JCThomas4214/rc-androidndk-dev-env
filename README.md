@@ -32,11 +32,11 @@ cd ..
 ### VSCode Tasks
 Click the button labeled "Tasks" in the bottom blue bar to view tasks to execute. The task heirarchy is the following.
 ```sh
-└─ Full
-    ├─ Clean
-    │   └─ Build
-    └─ Move
-        └─ Compile    
+├─ Full
+│   ├─ Build
+│   └─ Move    
+│       └─ Compile
+└─ Clean           
 ```
 ## Future
 - gdbserver and gdbclient for remote native debugging
