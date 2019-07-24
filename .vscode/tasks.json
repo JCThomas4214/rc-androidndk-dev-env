@@ -28,8 +28,8 @@
                 "-DCMAKE_BUILD_TYPE=$ENV",
                 "-DANDROID_ABI=$ABI",
                 "-DANDROID_NATIVE_API_LEVEL=$API",
-                "-B", "${workspaceFolder}/build",
-                "-S", "${workspaceFolder}", "&&",
+                "--build", "${workspaceFolder}/build",
+                "${workspaceFolder}", "&&",
 
                 "echo", "\"export", "MOVE_PATH=${workspaceFolder}/$ENV/$ABI\"", 
                 ">", "${workspaceFolder}/build/movepath"
@@ -37,8 +37,8 @@
             "options": {
                 "env": {
                     "ENV": "${input:ENV}",
-                    "ABI": "${input:ABI}",
-                    "API": "${input:API}"
+                    "ABI": "armeabi-v7a",//"${input:ABI}",
+                    "API": "android-16"//"${input:API}"
                 }
             },
             "dependsOn": [
@@ -53,7 +53,6 @@
             "type": "shell",
             "command": "cmake",
             "args": [
-                "--build", "${workspaceFolder}/build",
                 "--config", "Debug",
                 "--target", "main",
                 "--",
