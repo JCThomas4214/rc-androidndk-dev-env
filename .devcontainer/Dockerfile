@@ -21,15 +21,12 @@ RUN apt-get -y install curl unzip tar adb \
     && curl -L -o /mats/scripts/scripts.tar.gz --create-dirs https://android.googlesource.com/platform/development/+archive/master/scripts.tar.gz \
     && tar -C /mats/scripts -xvf /mats/scripts/scripts.tar.gz \
     && mv /mats/scripts/gdbclient.py /mats \
-    && curl -L -o /mats/gdb/arm-linux-android-gdb+gdbserver.zip --create-dirs http://gnutoolchains.com/android/7.4.1/arm-linux-android-gdb+gdbserver.zip \
-    && unzip /mats/gdb/arm-linux-android-gdb+gdbserver.zip -d /mats/gdb \
-    && mv /mats/gdb/gdbserver /mats \
-    && curl -L -o /mats/ndk/r20/android-ndk-r20-linux-x86_64.zip --create-dirs https://dl.google.com/android/repository/android-ndk-r20-linux-x86_64.zip \
-    && unzip /mats/ndk/r20/android-ndk-r20-linux-x86_64.zip -d /mats/ndk/r20 \
-    # && /mats/ndk/r20/android-ndk-r20/build/tools/make-standalone-toolchain.sh --system=linux-x86_64 --arch=arm --platform=android-16 --install-dir=/mats/ndk/r20 \
-    # && cp /usr/bin/r10e/bin/arm-linux-androideabi-gcc* /usr/bin && cp /usr/bin/r10e/bin/arm-linux-androideabi-g++ /usr/bin \
+    && curl -L -o /mats/ndk/android-ndk-r20-linux-x86_64.zip --create-dirs https://dl.google.com/android/repository/android-ndk-r20-linux-x86_64.zip \
+    && unzip /mats/ndk/android-ndk-r20-linux-x86_64.zip -d /mats/ndk \
+    && mv /mats/ndk/android-ndk-r20/prebuilt/android-arm/gdbserver /mats/gdbserver \
+    && mv /mats/ndk/android-ndk-r20/prebuilt/android-arm64/gdbserver /mats/gdbserver64 \
+    && rm -f /mats/ndk/android-ndk-r20-linux-x86_64.zip \
     && rm -rf /mats/gdb \
-    # && rm -rf /mats/ndk \
     && rm -rf /mats/scripts
 
 RUN mkdir /workspace

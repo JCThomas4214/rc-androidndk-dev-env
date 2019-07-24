@@ -8,9 +8,13 @@
             "label": "Full",
             "dependsOn": [
                 "Build",
-                "Move Binary"
+                "Move"
             ],
-            "dependsOrder": "sequence"
+            "dependsOrder": "sequence",   
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
         },
         /*
             CMAKE BUILD SECTION
@@ -20,15 +24,25 @@
             "type": "shell",
             "command": "cmake",
             "args": [
-                "-DCMAKE_TOOLCHAIN_FILE=/mats/ndk/r20/android-ndk-r20/build/cmake/android.toolchain.cmake",
-                "-DCMAKE_BUILD_TYPE=${input:environment}",
-                "-DANDROID_ABI=${input:ABI}",
-                "-DANDROID_NATIVE_API_LEVEL=${input:API}",
+                "-DCMAKE_TOOLCHAIN_FILE=/mats/ndk/android-ndk-r20/build/cmake/android.toolchain.cmake",
+                "-DCMAKE_BUILD_TYPE=$ENV",
+                "-DANDROID_ABI=$ABI",
+                "-DANDROID_NATIVE_API_LEVEL=$API",
                 "-B", "${workspaceFolder}/build",
-                "-S", "${workspaceFolder}"
+                "-S", "${workspaceFolder}", "&&",
+
+                "echo", "\"export", "MOVE_PATH=${workspaceFolder}/$ENV/$ABI\"", 
+                ">", "${workspaceFolder}/build/movepath"
             ],
+            "options": {
+                "env": {
+                    "ENV": "${input:ENV}",
+                    "ABI": "${input:ABI}",
+                    "API": "${input:API}"
+                }
+            },
             "dependsOn": [
-                "Clean"
+                // "Clean"
             ]
         },
         /*
@@ -44,11 +58,7 @@
                 "--target", "main",
                 "--",
                 "-j", "6"
-            ],   
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            }
+            ]
         },
         /*
             CLEAN THE PROJECT
@@ -59,20 +69,23 @@
             "command": "rm",
             "args": [
                 "-rf", "${workspaceFolder}/build", "&&",
-                "rm", "-rf", "${workspaceFolder}/release", "&&",
-                "rm", "-rf", "${workspaceFolder}/debug", "&&",
-                "rm", "-rf", "${workspaceFolder}/test"
+                "rm", "-rf", "${workspaceFolder}/RELEASE", "&&",
+                "rm", "-rf", "${workspaceFolder}/DEBUG", "&&",
+                "rm", "-rf", "${workspaceFolder}/TEST"
             ]
         },
         /*
             ADDITIONAL SCRIPTS
         */
         {
-            "label": "Move Binary",
+            "label": "Move",
             "type": "shell",
-            "command": "cp",
+            "command": "source",
             "args": [
-                "${workspaceFolder}/**/**/main", "${workspaceFolder}/src/"
+                "${workspaceFolder}/build/movepath", "&&",
+                "mkdir", "-p", "$MOVE_PATH", "&&",
+                "find", "${workspaceFolder}/build", "-name", "'main'",
+                "-exec", "cp", "{}", "$MOVE_PATH", "\\;"
             ],
             "dependsOn": [
                 "Compile"
@@ -82,7 +95,7 @@
     "inputs": [
         {
             "type": "pickString",
-            "id": "environment",
+            "id": "ENV",
             "description": "What build environment are we building?",
             "options": ["RELEASE", "DEBUG", "TEST"],
             "default": "RELEASE"

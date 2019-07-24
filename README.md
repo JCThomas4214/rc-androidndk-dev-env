@@ -33,10 +33,10 @@ cd ..
 Click the button labeled "Tasks" in the bottom blue bar to view tasks to execute. The task heirarchy is the following.
 ```sh
 └─ Full
-    ├─ Build
-    │   └─ Clean
-    └─ Compile
-        └─ Move Binary    
+    ├─ Clean
+    │   └─ Build
+    └─ Move
+        └─ Compile    
 ```
 ## Future
 - gdbserver and gdbclient for remote native debugging
