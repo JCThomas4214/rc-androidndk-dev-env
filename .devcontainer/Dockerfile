@@ -14,11 +14,21 @@ RUN apt-get -y install git procps lsb-release
 RUN apt-get -y install libicu[0-9][0-9]
 
 # Install tools
-RUN apt-get -y install build-essential cmake cppcheck valgrind python-dev python-pip
+RUN apt-get -y install build-essential cppcheck valgrind python-dev python-pip curl unzip tar adb 
+
+RUN mkdir -p /mats/cmake && curl -o /mats/cmake/cmake-2.8.12.2.tar.gz --create-dirs https://cmake.org/files/v2.8/cmake-2.8.12.2.tar.gz \
+    && tar -C /mats/cmake -xvf /mats/cmake/cmake-2.8.12.2.tar.gz \
+    && make /mats/cmake/cmake-2.8.12.2 && make /mats/cmake/cmake-2.8.12.2 install \
+    && rm -rf /mats/cmake/* \
+    && curl -o /mats/cmake/cmake-3.13.5-Linux-x86_64.tar.gz --create-dirs https://cmake.org/files/v3.13/cmake-3.13.5-Linux-x86_64.tar.gz \
+    && tar -C /mats/cmake -xvf /mats/cmake/cmake-3.13.5-Linux-x86_64.tar.gz \
+    && mv /mats/cmake/cmake-3.13.5-Linux-x86_64/bin/cmake /usr/bin/cmake \
+    && mv /mats/cmake/cmake-3.13.5-Linux-x86_64/share/cmake-3.13 /usr/share/ \
+    && rm -rf /mats/cmake
+
 
 ## Install tools for gdbserver and gdbclient download and extract
-RUN apt-get -y install curl unzip tar adb \
-    && curl -L -o /mats/scripts/scripts.tar.gz --create-dirs https://android.googlesource.com/platform/development/+archive/master/scripts.tar.gz \
+RUN curl -L -o /mats/scripts/scripts.tar.gz --create-dirs https://android.googlesource.com/platform/development/+archive/master/scripts.tar.gz \
     && tar -C /mats/scripts -xvf /mats/scripts/scripts.tar.gz \
     && mv /mats/scripts/gdbclient.py /mats \
     && curl -L -o /mats/ndk/android-ndk-r20-linux-x86_64.zip --create-dirs https://dl.google.com/android/repository/android-ndk-r20-linux-x86_64.zip \

@@ -28,8 +28,8 @@
                 "-DCMAKE_BUILD_TYPE=$ENV",
                 "-DANDROID_ABI=$ABI",
                 "-DANDROID_NATIVE_API_LEVEL=$API",
-                "--build", "${workspaceFolder}/build",
-                "${workspaceFolder}", "&&",
+                "-B", "${workspaceFolder}/build",
+                "-S", "${workspaceFolder}", "&&",
 
                 "echo", "\"export", "MOVE_PATH=${workspaceFolder}/$ENV/$ABI\"", 
                 ">", "${workspaceFolder}/build/movepath"
@@ -53,6 +53,7 @@
             "type": "shell",
             "command": "cmake",
             "args": [
+                "--build", "${workspaceFolder}/build",
                 "--config", "Debug",
                 "--target", "main",
                 "--",
