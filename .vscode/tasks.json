@@ -31,13 +31,14 @@
                 "-B", "${workspaceFolder}/build",
                 "-S", "${workspaceFolder}", "&&",
 
-                "echo", "\"export", "MOVE_PATH=${workspaceFolder}/$ENV/$ABI\"", 
-                ">", "${workspaceFolder}/build/movepath"
+                "echo", "\"export", "MOVE_PATH=${workspaceFolder}/$ENV/$ABI\"", ">", "${workspaceFolder}/build/movepath",
+                "echo", "\"export", "ENV=$ENV\"", ">>", "${workspaceFolder}/build/movepath",
+                "echo", "\"export", "ABI=$ABI\"", ">>", "${workspaceFolder}/build/movepath"
             ],
             "options": {
                 "env": {
                     "ENV": "${input:ENV}",
-                    "ABI": "armeabi-v7a",//"${input:ABI}",
+                    "ABI": "${input:ABI}",
                     "API": "android-16"//"${input:API}"
                 }
             },
@@ -90,6 +91,32 @@
             "dependsOn": [
                 "Compile"
             ]
+        },
+        {
+            "label": "Push GDB",
+            "type": "shell",
+            "command": "adb",
+            "args": [
+                "push", "/mats/gdbserver", "/data/local/tmp/gdbserver"
+            ]
+        },
+        {
+            "label": "Run GDB",
+            "type": "shell",
+            "command": "source",
+            "args": [
+                "${workspaceFolder}/build/movepath", "&&",
+                "adb", "push", "${workspaceFolder}/$ENV/$ABI/$BIN", "/data/local/tmp", "&&",
+                "adb", "shell", "su", "-c", "\"/data/local/tmp/gdbserver :5039 /data/local/tmp/$BIN &\""
+            ],
+            "options": {
+                "env": {
+                    "BIN": "${input:BIN}"
+                }
+            },
+            "dependsOn": [
+                "Push GDB"
+            ]
         }
     ],
     "inputs": [
@@ -119,6 +146,13 @@
                 "android-28",
             ],
             "default": "android-16"
+        },
+        {
+            "type": "pickString",
+            "id": "BIN",
+            "description": "What binary do you want?",
+            "options": ["main"],
+            "default": "main"
         }
     ]
 }

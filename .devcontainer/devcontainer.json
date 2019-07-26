@@ -17,8 +17,8 @@
 	],
 	"runArgs": [
 		"--privileged",
+		"-p", "5039:5039",
 		"-v", "/dev/bus/usb:/dev/bus/usb",
-		// "--device=/dev/ttyACM0",
 		"--cap-add=SYS_PTRACE",
 		"--security-opt", "seccomp=unconfined"
 	],
