@@ -4,6 +4,6 @@
 int main(int argc, char** argv)
 {
 	printf("the val: %d\n", bin_hex_StrToInt32("100011110"));
-    printf("Helloworld with Clang\n");
+    printf("Hello World with Clang\n");
 	return 0;
 } 

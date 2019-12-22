@@ -52,14 +52,7 @@
         {
             "label": "Compile",
             "type": "shell",
-            "command": "cmake",
-            "args": [
-                "--build", "${workspaceFolder}/build",
-                "--config", "Debug",
-                "--target", "main",
-                "--",
-                "-j", "6"
-            ]
+            "command": "cmake --build ${workspaceFolder}/build --config Debug --target main -- -j 6",
         },
         /*
             CLEAN THE PROJECT
@@ -67,12 +60,11 @@
         {
             "label": "Clean",
             "type": "shell",
-            "command": "rm",
-            "args": [
-                "-rf", "${workspaceFolder}/build", "&&",
-                "rm", "-rf", "${workspaceFolder}/RELEASE", "&&",
-                "rm", "-rf", "${workspaceFolder}/DEBUG", "&&",
-                "rm", "-rf", "${workspaceFolder}/TEST"
+            "command": [
+                "rm -rf ${workspaceFolder}/build && ",
+                "rm -rf ${workspaceFolder}/RELEASE && ",
+                "rm -rf ${workspaceFolder}/DEBUG && ",
+                "rm -rf ${workspaceFolder}/TEST"
             ]
         },
         /*
@@ -81,41 +73,36 @@
         {
             "label": "Move",
             "type": "shell",
-            "command": "source",
-            "args": [
-                "${workspaceFolder}/build/movepath", "&&",
-                "mkdir", "-p", "$MOVE_PATH", "&&",
-                "find", "${workspaceFolder}/build", "-name", "'main'",
-                "-exec", "cp", "{}", "$MOVE_PATH", "\\;"
+            "command": [
+                "source ${workspaceFolder}/build/movepath && ",
+                "mkdir -p $MOVE_PATH && ",
+                "find ${workspaceFolder}/build -name 'main' -exec cp {} $MOVE_PATH \\;"
             ],
             "dependsOn": [
                 "Compile"
             ]
         },
         {
-            "label": "Push GDB",
+            "label": "Prep GDB",
             "type": "shell",
-            "command": "adb",
-            "args": [
-                "push", "/mats/gdbserver", "/data/local/tmp/gdbserver"
+            "command": [
+                "adb push ${workspaceFolder}/build/src/$BIN /data/local/tmp/$BIN && ",
+                "adb push /mats/gdbserver* /data/local/tmp && ",
+                "adb forward tcp:5039 tcp:5039"
             ]
         },
         {
-            "label": "Run GDB",
+            "label": "Run GDB Server",
             "type": "shell",
-            "command": "source",
-            "args": [
-                "${workspaceFolder}/build/movepath", "&&",
-                "adb", "push", "${workspaceFolder}/$ENV/$ABI/$BIN", "/data/local/tmp", "&&",
-                "adb", "shell", "su", "-c", "\"/data/local/tmp/gdbserver :5039 /data/local/tmp/$BIN &\""
-            ],
+            "isBackground": true,
+            "command": "adb shell /data/local/tmp/gdbserver64 :5039 /data/local/tmp/$BIN",
             "options": {
                 "env": {
                     "BIN": "${input:BIN}"
                 }
             },
             "dependsOn": [
-                "Push GDB"
+                "Prep GDB"
             ]
         }
     ],

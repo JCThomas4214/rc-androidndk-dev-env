@@ -2,41 +2,22 @@
     "version": "0.1.0",
     "configurations": [
         {
-            "name": "(gdbclient.py) Attach (port: 5039)",
+            "name": "GDB Attach (port: 5039)",
             "type": "cppdbg",
             "request": "launch",
-            "cwd": "${workspaceFolder}/build/src",
-            "program": "main",
+            "program": "${workspaceFolder}/build/src/main",
+            "cwd": "${workspaceFolder}",
             "MIMode": "gdb",
-            "miDebuggerServerAddress": "localhost:5039",
             "miDebuggerPath": "/mats/ndk/android-ndk-r20/prebuilt/linux-x86_64/bin/gdb",
-            "logging": {
-                "engineLogging": true,
-                "moduleLoad": true
-            },
+            "miDebuggerServerAddress": ":5039",
             "setupCommands": [
                 {
-                    // Required for vscode.
                     "description": "Enable pretty-printing for gdb",
                     "text": "-enable-pretty-printing",
-                    "ignoreFailures": true,
-                },
-                {
-                    "description": "gdb command: dir",
-                    "text": "-environment-directory ${workspaceFolder}/src", //.format(root)
-                    "ignoreFailures": false
-                },
-                {
-                    "description": "gdb command: set solib-search-path",
-                    "text": "-gdb-set solib-search-path system/lib/hw:vendor/lib/hw", //.format(":".join(solib_search_path)),
-                    "ignoreFailures": false
-                },
-                {
-                    "description": "gdb command: set solib-absolute-prefix",
-                    "text": "-gdb-set solib-absolute-prefix /", //.format(sysroot),
-                    "ignoreFailures": false
-                },
-            ]
+                    "ignoreFailures": true
+                }
+            ],
+            "preLaunchTask": "Run GDB Server"
         }
     ]
 }

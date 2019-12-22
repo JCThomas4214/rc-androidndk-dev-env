@@ -3,34 +3,6 @@
 #include <stdlib.h>
 #include "TestCode.h"
 
-/*
-
-Write a function bin_hex_StrToInt32 that receives a string containing either a binary or hex number. 
-The function must return the string�s integer value. 
-
-Note that a string that contains ONLY '1' and '0' can be considered as a binary or a hex string. 
-For eaxmple, "10" can be a binary number equivalent to 2 or a hex number equivalent to 16.
-If the string is containg ONLY '1' and '0', the default will be ***binary***.
-
-If the input parameter is empty or invalid value, the function should return -2
-
-Note: Do not call built-in library functions that accomplish these tasks automatically.
-*/
-
-/*
-
-
-
-***REVIEWER COMMENTS/APPROVAL****
-
-
-
-
-
-
-
-*/
-
 int bin_hex_StrToInt32(const char * s)
 {
     int length = strlen(s);

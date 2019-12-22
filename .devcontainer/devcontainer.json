@@ -17,10 +17,7 @@
 	],
 	"runArgs": [
 		"--privileged",
-		"-p", "5039:5039",
-		"-v", "/dev/bus/usb:/dev/bus/usb",
-		"--cap-add=SYS_PTRACE",
-		"--security-opt", "seccomp=unconfined"
+		"-v", "/dev/bus/usb:/dev/bus/usb"
 	],
 	"settings": {
 		"python.pythonPath": "/usr/local/bin/python",

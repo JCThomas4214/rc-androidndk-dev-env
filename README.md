@@ -38,9 +38,18 @@ Click the button labeled "Tasks" in the bottom blue bar to view tasks to execute
 │       └─ Compile
 └─ Clean           
 ```
+
+## Debugging with gdbserver
+Using breakpoints in VScode works! VScode will attach to a gdbserver running on a connected android device. The "GDB Attach (port: 5039)" launch configuration will do most of the work for you. 
+1. Attach an Android device
+2. Make sure you have access to the device with 'adb devices'
+  - If you do not, it may be b/c you need to periferal access to the VM that's running docker (Windows) or there's a problem with the container config (Look in .devcontainer/.devcontainer.json)
+3. Select a breakpoint and run the launch configuration in the debug tab
+  - The launch config will first push the specified compiled binary/gdbserver(64), then 'adb forward' port 5039 so to have access to the running server over adb. The server will now run and you will see output in the VScode terminal tab.
+4. Restart the debug cycle using cntl+shift+F5 or the green restart button as the host gdb will not attach on first run
+NOTE: Currently gdbserver64 is being run statically, you will need to manually specify the 32-bit version in task.json if needed. Only works out of the box over adb but can be configured to operate over IP from the device. 
+
 ## Future
-- gdbserver and gdbclient for remote native debugging
-- separate release, dev, and test builds
 - docker size optimization
 
 ### Sources
