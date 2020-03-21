@@ -1,0 +1,92 @@
+{
+    "version": "2.0.0",
+    /*
+        SET THESE FOR CURRENT ENVIRONMENT
+    */
+    "options": {
+        "env": {
+            "ABI": "arm64-v8a", //"armeabi-v7a","x86","x86_64" NOTE: gdbserver on the phone will only work with ARM
+            "API": "android-16", //"android-16","android-17","android-18","android-19","android-20","android-21","android-22","android-23","android-24","android-25","android-26","android-27","android-28",
+            "CONTAINER": "cloud1:5000/android_ndk_builder",
+
+            "GDBServer": "gdbserver64"
+        }
+    },
+    "tasks": [
+        {
+            "label": "Compile Debug",
+            "type": "shell",
+            "command": [
+                "docker run -t -v ${workspaceFolder}:${workspaceFolder} $CONTAINER /bin/bash -c \"",
+                "cmake -DCMAKE_TOOLCHAIN_FILE=/mats/ndk/android-ndk-r21/build/cmake/android.toolchain.cmake -DCMAKE_BUILD_TYPE=DEBUG -DANDROID_ABI=$ABI -DANDROID_NATIVE_API_LEVEL=$API -S ${workspaceFolder} -B ${workspaceFolder}/src/build &&",
+                "cmake --build ${workspaceFolder}/src/build --config Debug -- -j 6 &&",
+                "mkdir -p ${workspaceFolder}/DEBUG/$ABI && ",
+                "find ${workspaceFolder}/src/build -name '*_bin' -exec cp {} ${workspaceFolder}/DEBUG/$ABI \\; &&",
+
+                "cmake -DCMAKE_TOOLCHAIN_FILE=/mats/ndk/android-ndk-r21/build/cmake/android.toolchain.cmake -DCMAKE_BUILD_TYPE=TEST -DANDROID_ABI=$ABI -DANDROID_NATIVE_API_LEVEL=$API -S ${workspaceFolder} -B ${workspaceFolder}/src/build &&",
+                "cmake --build ${workspaceFolder}/src/build --config Debug -- -j 6 &&",
+                "mkdir -p ${workspaceFolder}/TEST/$ABI && ",
+                "find ${workspaceFolder}/src/build -name '*_bin' -exec cp {} ${workspaceFolder}/TEST/$ABI \\;\"",       
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Compile Release",
+            "type": "shell",
+            "command": [
+                "docker run -t -v ${workspaceFolder}:${workspaceFolder} $CONTAINER /bin/bash -c \"",
+                "cmake -DCMAKE_TOOLCHAIN_FILE=/mats/ndk/android-ndk-r21/build/cmake/android.toolchain.cmake -DCMAKE_BUILD_TYPE=RELEASE -DANDROID_ABI=$ABI -DANDROID_NATIVE_API_LEVEL=$API -S ${workspaceFolder} -B ${workspaceFolder}/src/build &&",
+                "cmake --build ${workspaceFolder}/src/build -- -j 6 &&",
+                "mkdir -p ${workspaceFolder}/RELEASE/$ABI && ",
+                "find ${workspaceFolder}/src/build -name '*_bin' -exec cp {} ${workspaceFolder}/RELEASE/$ABI \\;\""
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "Clean",
+            "type": "shell",
+            "command": [
+                "rm -rf ${workspaceFolder}/src/build && ",
+                "rm -rf ${workspaceFolder}/RELEASE && ",
+                "rm -rf ${workspaceFolder}/DEBUG && ",
+                "rm -rf ${workspaceFolder}/TEST"
+            ]
+        },
+        {
+            "label": "Prep GDB",
+            "type": "shell",
+            "command": [
+                "adb push ${workspaceFolder}/$ENV/$ABI/* /data/local/tmp && ",
+                "adb push /support/gdbserver* /data/local/tmp"
+            ]
+        },
+        {
+            "label": "Run GDB Server",
+            "type": "shell",
+            "isBackground": true,
+            "dependsOrder": "sequence",
+            "command": "adb shell /data/local/tmp/$GDBServer :5039 /data/local/tmp/${relativeFileDirname}",
+            "dependsOn": [
+                "Compile",
+                "Prep GDB"
+            ]
+        }
+    ],
+    "inputs": [
+        {
+            "type": "pickString",
+            "id": "ENV",
+            "description": "What environment to compile?",
+            "options": ["DEBUG", "TEST", "RELEASE"],
+            "default": "DEBUG"
+        }
+    ]
+
+}
