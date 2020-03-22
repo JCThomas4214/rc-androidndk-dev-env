@@ -1,15 +1,16 @@
 #define DEBUG
 
-extern "C" {
-	#include <template_module/template_module.h>
+extern "C"
+{
+#include <template_module/template_module.h>
 }
 #include <gmock/gmock.h>
 
-#define _SILENCE_TR1_NAMESPACE_DEPRECATION_WARNING  1
+#define _SILENCE_TR1_NAMESPACE_DEPRECATION_WARNING 1
 
 TEST(TestCase1, bin_hex_StrToInt32Test_cornerCases)
-{   	                
-	const char * stringlist[] = {"", " ", "00 11", ".0123", "0.", "+00", "0.1", "10+", "12fl", "abcdefg"};
+{
+	const char *stringlist[] = {"", " ", "00 11", ".0123", "0.", "+00", "0.1", "10+", "12fl", "abcdefg"};
 
 	ASSERT_EQ(-2, bin_hex_StrToInt32(stringlist[0]));
 	ASSERT_EQ(-2, bin_hex_StrToInt32(stringlist[1]));
@@ -21,34 +22,31 @@ TEST(TestCase1, bin_hex_StrToInt32Test_cornerCases)
 	ASSERT_EQ(-2, bin_hex_StrToInt32(stringlist[7]));
 	ASSERT_EQ(-2, bin_hex_StrToInt32(stringlist[8]));
 	ASSERT_EQ(-2, bin_hex_StrToInt32(stringlist[9]));
-	
-	
 }
 
 TEST(TestCase2, bin_hex_StrToInt32Test_normalCases)
-{   	
-	const char * stringlist[] = {
-						  "0", 
-						  "0000",
-						  "1",
-						  "0001",
-						  "101",
-						  "1100",
-						  "11100",
-						  "10000000",
-						  "11111001",
-						  "0000111100001101",
-						  "9",
-						  "A",
-						  "F",
-						  "0123",
-						  "abcdef",
-						  "ABCDEF",
-						  "abcDEF",
-						  "aBcDeF",
-						  "D1Ce",
-						  "923FB5"
-					     };
+{
+	const char *stringlist[] = {
+		"0",
+		"0000",
+		"1",
+		"0001",
+		"101",
+		"1100",
+		"11100",
+		"10000000",
+		"11111001",
+		"0000111100001101",
+		"9",
+		"A",
+		"F",
+		"0123",
+		"abcdef",
+		"ABCDEF",
+		"abcDEF",
+		"aBcDeF",
+		"D1Ce",
+		"923FB5"};
 
 	ASSERT_EQ(0, bin_hex_StrToInt32(stringlist[0]));
 	ASSERT_EQ(0, bin_hex_StrToInt32(stringlist[1]));
@@ -72,9 +70,9 @@ TEST(TestCase2, bin_hex_StrToInt32Test_normalCases)
 	ASSERT_EQ(9584565, bin_hex_StrToInt32(stringlist[19]));
 }
 
-int main(int argc, char** argv, char** envp)
+int main(int argc, char **argv, char **envp)
 {
 	// printf("Helloworld!! with some clang ;)\n");
 	::testing::InitGoogleMock(&argc, argv);
 	return RUN_ALL_TESTS();
-} 
+}

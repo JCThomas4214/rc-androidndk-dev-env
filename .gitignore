@@ -2,8 +2,6 @@ RELEASE
 DEBUG
 TEST
 
-mats
-
 googletest
 
 ## Ignore Visual Studio temporary files, build results, and

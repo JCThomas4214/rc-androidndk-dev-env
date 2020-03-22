@@ -1,6 +1,6 @@
 // See https://aka.ms/vscode-remote/devcontainer.json for format details.
 {
-	"name": "Dev Env Proto",
+	"name": "Android NDK 21 Dev",
 	"context": "..",
 	"dockerFile": "Dockerfile",
 
@@ -14,7 +14,9 @@
 		"ms-python.python",
 		"ms-vscode.cpptools",
 		"spmeesseman.vscode-taskexplorer",
-		"twxs.cmake"
+		"twxs.cmake",
+		"notskm.clang-tidy",
+		"xaver.clang-format"
 	],
 	"runArgs": [
 		"--privileged",
@@ -26,6 +28,11 @@
 		"python.pythonPath": "/usr/bin/python3",
 		"python.linting.pylintEnabled": true,
 		"python.linting.enabled": true,
-		"terminal.integrated.shell.linux": "/bin/bash"
+		"terminal.integrated.shell.linux": "/bin/bash",
+
+		"clang-tidy.executable": "/mats/ndk/android-ndk-r21/toolchains/llvm/prebuilt/linux-x86_64/bin/clang-tidy",
+		
+		"clang-format.executable": "/mats/ndk/android-ndk-r21/toolchains/llvm/prebuilt/linux-x86_64/bin/clang-format",
+		"editor.formatOnSave": true
 	}
 }
