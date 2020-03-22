@@ -1,1 +1,1 @@
-FROM cloud1:5000/android_ndk_builder
+FROM android_ndk_builder

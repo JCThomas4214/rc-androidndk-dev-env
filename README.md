@@ -31,7 +31,7 @@ cd ..
 Click the button labeled "Tasks" in the bottom blue bar to view tasks to run. You can also press ctrl+shift+P and write "task", and find "Run Task" to select tasks to run. The task heirarchy is the following. Deeper tasks will be run by their parents.
 ```sh
 ├─ Compile
-│   └─ Build    
+├─ Debug    
 └─ Clean           
 ```
 
@@ -48,8 +48,9 @@ Issues: Currently gdbserver64 is being run statically in the 'Run GDB server' ta
 - container size optimization
 
 ### Sources
+- https://developer.android.com/ndk/guides
 - https://code.visualstudio.com/docs/remote/containers
-- https://cmake.org/cmake/help/v3.15/
+- https://cmake.org/cmake/help/v3.17/
 - https://developer.android.com/ndk/guides/cmake
 - https://source.android.com/devices/tech/debug/gdb
 - https://stackoverflow.com/questions/53519668/how-to-attach-to-remote-gdb-with-vscode

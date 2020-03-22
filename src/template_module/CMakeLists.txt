@@ -11,12 +11,12 @@ set(COMMON_FLAGS_DEBUG      "${COMMON_FLAGS} -O0 -g -ggdb -fPIE -funwind-tables 
 set(COMMON_FLAGS_RELEASE    "${COMMON_FLAGS} -Os -s -ffunction-sections -fdata-sections -fvisibility=hidden -fmerge-all-constants -Wno-builtin-macro-redefined -Wextra")
 
 #compiler flags for building debug
-set(CMAKE_C_FLAGS_DEBUG     "${COMMON_FLAGS_DEBUG} -DDEBUG -DDebug -DDEBUG_ON -DSTANDALONE_BUILD")
-set(CMAKE_CXX_FLAGS_DEBUG   "${COMMON_FLAGS_DEBUG} -std=c++11 -DDEBUG -DDebug -DDEBUG_ON -DSTANDALONE_BUILD")
+set(CMAKE_C_FLAGS_DEBUG     "${COMMON_FLAGS_DEBUG} -DDEBUG -DSTANDALONE_BUILD") #-DDebug -DDEBUG_ON 
+set(CMAKE_CXX_FLAGS_DEBUG   "${COMMON_FLAGS_DEBUG} -std=c++11 -DDEBUG -DSTANDALONE_BUILD") #-DDebug -DDEBUG_ON 
 
 #compiler flags for building release
-set(CMAKE_C_FLAGS_RELEASE   "${COMMON_FLAGS_RELEASE} -DSTANDALONE_BUILD")
-set(CMAKE_CXX_FLAGS_RELEASE "${COMMON_FLAGS_RELEASE} -std=c++11 -DSTANDALONE_BUILD")
+set(CMAKE_C_FLAGS_RELEASE   "${COMMON_FLAGS_RELEASE} -DRELEASE -DSTANDALONE_BUILD")
+set(CMAKE_CXX_FLAGS_RELEASE "${COMMON_FLAGS_RELEASE} -std=c++11 -DRELEASE -DSTANDALONE_BUILD")
 
 # Set our Test flags
 set(CMAKE_C_FLAGS_TEST      "${COMMON_FLAGS_DEBUG} -DTEST -DSTANDALONE_BUILD -fno-omit-frame-pointer")

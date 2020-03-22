@@ -5,10 +5,12 @@
             "name": "GDB Attach (port: 5039)",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/build/src/main",
+            "program": "${workspaceFolder}/src/build/${relativeFileDirname}/${fileBasenameNoExtension}_bin",
             "cwd": "${workspaceFolder}",
             "MIMode": "gdb",
-            "miDebuggerPath": "/mats/ndk/android-ndk-r20/prebuilt/linux-x86_64/bin/gdb",
+            // miDebuggerPath needs to be changed to gdb path if on host
+            // DO NOT PUSH THIS CHANGE
+            "miDebuggerPath": "/mats/ndk/android-ndk-r21/prebuilt/linux-x86_64/bin/gdb",
             "miDebuggerServerAddress": ":5039",
             "setupCommands": [
                 {
@@ -17,8 +19,8 @@
                     "ignoreFailures": true
                 }
             ],
-            "environment": [{"name": "ENV", "value": "DEBUG"}],
-            "preLaunchTask": "Run GDB Server"
+            // "environment": [{"name": "ENV", "value": "DEBUG"}],
+            "preLaunchTask": "Debug"
         }
     ]
 }
