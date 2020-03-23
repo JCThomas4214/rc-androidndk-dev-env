@@ -6,8 +6,7 @@
     "options": {
         "env": {
             "ARCH": "arm64", //arm, arm64
-            "PASS_CONTAINER": "-p", //"-p" (pass container), "" (use container)
-            "GDBServer": "gdbserver64"
+            "PASS_CONTAINER": "-p" //"-p" (pass container), "" (use container)
         }
     },
     "tasks": [
@@ -40,7 +39,11 @@
             "type": "pickString",
             "id": "ENV",
             "description": "What environment do you want to build?",
-            "options": ["debug", "test", "release"],
+            "options": [
+                "debug",
+                "test",
+                "release"
+            ],
             "default": "debug"
         }
     ]
