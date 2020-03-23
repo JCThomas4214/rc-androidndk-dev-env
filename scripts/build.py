@@ -13,18 +13,18 @@ def run_build(workspace_path, arch, env):
         'cmake', f'-DCMAKE_TOOLCHAIN_FILE={TOOLCHAIN}',
         f'-DCMAKE_BUILD_TYPE={env}', f'-DANDROID_ABI={helpers.get_abi(arch)}', f'-DANDROID_NATIVE_API_LEVEL={helpers.get_api(arch)}', 
         '-S', workspace_path, 
-        '-B', f'{workspace_path}/src/build'
+        '-B', f'{workspace_path}/build'
     ])
 # Compile using the makefiles using cmake which points to Android NDK toolchain
 def run_compile(workspace_path):
     subprocess.run([
-        'cmake', '--build', f'{workspace_path}/src/build', '--', '-j', '6'
+        'cmake', '--build', f'{workspace_path}/build', '--', '-j', '6'
     ])
 # Move the compiled binaries into and environment folder
 def move_bins(workspace_path, arch, env):
     subprocess.run(['mkdir', '-p', f'{workspace_path}/{env}/{arch}'])
     subprocess.run(
-        f'find {workspace_path}/src/build -name \'{helpers.get_bin_name(env)}\' -exec cp {{}} {workspace_path}/{env}/{arch} \\;', 
+        f'find {workspace_path}/build -name \'{helpers.get_bin_name(env)}\' -exec cp {{}} {workspace_path}/{env}/{arch} \\;', 
         shell=True
     )
 

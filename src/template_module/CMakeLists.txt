@@ -34,12 +34,6 @@ set(PACKAGE_SOURCES
 if (NOT CMAKE_BUILD_TYPE MATCHES TEST)
 
     add_executable(template_module_bin template_module.c ${PACKAGE_SOURCES} ${SDK_STANDALONE_SOURCES})
-
-    target_include_directories(
-        template_module_bin PUBLIC
-        ../include
-    )
-
     target_link_libraries(template_module_bin)   
 
 else()
@@ -49,12 +43,6 @@ else()
     )
 
     add_executable(template_module_test template_module.c ${UNIT_TEST_FILES} ${PACKAGE_SOURCES} ${SDK_STANDALONE_SOURCES})
-
-    target_include_directories(
-        template_module_test PUBLIC
-        ../include
-    )
-
     target_link_libraries(template_module_test gmock gmock_main)
     enable_testing()
 

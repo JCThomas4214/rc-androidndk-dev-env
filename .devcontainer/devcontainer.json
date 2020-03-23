@@ -3,36 +3,22 @@
 	"name": "Android NDK 21 Dev",
 	"context": "..",
 	"dockerFile": "Dockerfile",
-
-	// Uncomment the next line if you want to publish any ports.
-	// "appPort": [],
-
-	// Uncomment the next line to run commands after the container is created.
-	// "postCreateCommand": "python --version",
-
 	"extensions": [
 		"ms-python.python",
 		"ms-vscode.cpptools",
 		"spmeesseman.vscode-taskexplorer",
-		"twxs.cmake",
-		"notskm.clang-tidy",
-		"xaver.clang-format"
+		"twxs.cmake"
 	],
 	"runArgs": [
 		"--privileged",
-		"-v", "/dev/bus/usb:/dev/bus/usb",
-		"-v", "${env:HOME}/.android:/home/ndkdev/.android",
-		"-v", "${env:HOME}/.ssh:/home/ndkdev/.ssh"
+		"-v",
+		"/dev/bus/usb:/dev/bus/usb",
+		"-v",
+		"${env:HOME}/.android:/home/ndkdev/.android",
+		"-v",
+		"${env:HOME}/.ssh:/home/ndkdev/.ssh"
 	],
 	"settings": {
-		"python.pythonPath": "/usr/bin/python3",
-		"python.linting.pylintEnabled": true,
-		"python.linting.enabled": true,
 		"terminal.integrated.shell.linux": "/bin/bash",
-
-		"clang-tidy.executable": "/mats/ndk/android-ndk-r21/toolchains/llvm/prebuilt/linux-x86_64/bin/clang-tidy",
-		
-		"clang-format.executable": "/mats/ndk/android-ndk-r21/toolchains/llvm/prebuilt/linux-x86_64/bin/clang-format",
-		"editor.formatOnSave": true
 	}
 }
