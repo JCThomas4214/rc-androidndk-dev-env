@@ -4,8 +4,8 @@
 ```sh
 sudo apt install docker.io code
 code --install-extension ms-vscode-remote.remote-containers
-git clone https://gitlab.com/Jason-Thomas/rc-androidndk-dev-env.git && cd rc-androidndk-dev-env/src
-git clone https://android.googlesource.com/platform/external/googletest
+git clone https://github.com/JCThomas4214/rc-androidndk-dev-env && cd rc-androidndk-dev-env/src
+cd src && git clone https://android.googlesource.com/platform/external/googletest
 ```
 ## Quick Start Windows
 1. Download and install [VSCode](https://code.visualstudio.com/)
@@ -16,9 +16,8 @@ code --install-extension ms-vscode-remote.remote-containers
 3. Download and install [Docker Desktop](https://www.docker.com/products/docker-desktop) or [Docker Toolbox](https://github.com/docker/toolbox/releases) and make sure you login with your username (not email) and password
 4. Git clone the necessary repos
 ```sh
-git clone https://gitlab.com/Jason-Thomas/rc-androidndk-dev-env.git && cd rc-androidndk-dev-env/src
-git clone https://android.googlesource.com/platform/external/googletest
-cd ..
+git clone https://github.com/JCThomas4214/rc-androidndk-dev-env && cd rc-androidndk-dev-env/src
+cd src && git clone https://android.googlesource.com/platform/external/googletest
 ```
 
 ### After Quick Start
